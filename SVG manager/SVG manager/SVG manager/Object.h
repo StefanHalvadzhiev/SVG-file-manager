@@ -1,9 +1,5 @@
 #pragma once
 
-/// <summary>
-/// This is the base class for all SVG objects.
-/// </summary>
-
 class Object {
 	protected: 
 		char* objectTranslation;
