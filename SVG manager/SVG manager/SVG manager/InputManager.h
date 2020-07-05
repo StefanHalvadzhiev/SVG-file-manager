@@ -5,7 +5,7 @@ class InputManager {
 	private:
 		SVGManager svg;
 		char* input;
-		size_t inputLen;
+		unsigned int inputLen;
 
 		bool executeCommand(char** input, unsigned short wordCount);
 		unsigned short getCommandWordCount(char* input);
@@ -14,6 +14,7 @@ class InputManager {
 	public:
 		InputManager();
 		~InputManager();
-
+		InputManager& operator= (const InputManager& cpy) = delete;
+		InputManager(const InputManager& cpy) = delete;
 		bool recieveCommand(const char* userInput);
 };

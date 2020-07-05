@@ -64,9 +64,8 @@ unsigned short InputManager::getCommandWordCount(char* input) {
 	for (unsigned short i = 0; i < inputLen; i++)
 		if (input[i] == ' ') {
 			spacesCount++;
-			while (input[i + 1] == ' ') {
+			while (input[i + 1] == ' ')
 				i++;
-			}
 		}
 	if (inputLen == 0)
 		return 0;
@@ -76,33 +75,28 @@ unsigned short InputManager::getCommandWordCount(char* input) {
 }
 
 bool InputManager::executeCommand(char** separatedCommands, unsigned short wordCount) {
+	bool returnStatus = true;
 	if (strcmp(separatedCommands[0], "exit") == 0) {
 		std::cout << "Thank you for using the program!" << std::endl;
-		return false;
+		returnStatus = false;
 	}
 	else if (strcmp(separatedCommands[0], "help") == 0) {
 		help();
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "createfile") == 0) {
 		svg.createFile(separatedCommands[1]);
-		return true;	
 	}
 	else if (strcmp(separatedCommands[0], "close") == 0) {
 		svg.closeFile();
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "delete") == 0) {
 		svg.deleteFile(separatedCommands[1]);
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "open") == 0) {
 		svg.openFile(separatedCommands[1]);
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "save") == 0) {
 		svg.saveFile();
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "create") == 0) {
 		char** parameterString = new char* [wordCount - 2];
@@ -114,15 +108,12 @@ bool InputManager::executeCommand(char** separatedCommands, unsigned short wordC
 		for (unsigned short i = 0; i < wordCount - 2; i++)
 			delete[] parameterString[i];
 		delete[] parameterString;
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "erase") == 0) {
 		svg.erase(atoi(separatedCommands[1]));
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "print") == 0) {
 		svg.print();
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "translate") == 0) {
 		if (wordCount == 4)
@@ -133,12 +124,10 @@ bool InputManager::executeCommand(char** separatedCommands, unsigned short wordC
 			svg.translate(atof(separatedCommands[1]));
 		else
 			cout << "Too few arguments in function call." << endl;
-		return true;
 	}
 	else if (strcmp(separatedCommands[0], "within") == 0) {
 		if (wordCount <= 2) {
 			cout << "Please try again using proper input." << endl;
-			return true;
 		}
 		char** parameterString = new char* [wordCount - 2];
 		for (unsigned short i = 0; i < wordCount - 2; i++) {
@@ -149,8 +138,9 @@ bool InputManager::executeCommand(char** separatedCommands, unsigned short wordC
 		for (unsigned short i = 0; i < wordCount - 2; i++)
 			delete[] parameterString[i];
 		delete[] parameterString;
-		return true;
 	}
-	std::cout << "Wrong input. Please try again!" << std::endl;
-	return true;
+	else {
+		cout << "Invalid command." << endl;
+	}
+	return returnStatus;
 }
